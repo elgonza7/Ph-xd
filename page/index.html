@@ -1,0 +1,87 @@
+<!DOCTYPE html> <!-- declaramos HTML5-->
+<html lang="en"> <!--indica que lo de abajo es html-->
+    <head> <!--cabecera del documento-->
+        <meta charset="UTF-8"> <!--soporta acentos-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Control de Variables</title>
+        <!--relacion con el archivo css-->|
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.15/xlsx.full.min.js" defer></script>
+        <script src="script.js" defer></script> 
+    </head> <!--contiene metadatos y es oculto-->
+
+    <body>
+        <header> <!--encabezado de la pagina-->
+            <nav>
+                <ul>
+                    <li class="bot"><a href="#cargarE">CARGAR EXCEL</a></li>
+                    <li class="bot"><a href="#plantilla">PLANTILLA</a></li>
+                    <li class="bot"><a href="#graficos">GRAFICOS</a></li>
+                    <li class="bot"><a href="#criticas">VARIABLES CRITICAS</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main> <!--contenido principal de la pagina-->
+            <h1 id="t1">Control de Variables en Planta tipo Cil</h1>
+            <div class="filtros">
+                <span class="nota"></span><br>
+                <input id="excelFile" class="excelFileInput" type="file" accept=".xlsx,.xls,.csv">
+                <button id="loadDbOnlyButton" class="excelFileButton" type="button">Mostrar solo datos de la base de datos</button>
+                <label for="excelFile" class="excelFileButton">Seleccionar Excel y mostrar datos</label>
+                <button id="loadDbWithExcelButton" class="excelFileButton" type="button">Mostrar datos de la base de datos con Excel</button>
+            </div>
+            <section id="plantilla">
+                <h1>Plantilla de Valores</h1>
+                <div class="filtros">
+                    <label for="filterField">Filtrar por:</label>
+                    <select id="filterField" class="filtrar">
+                        <option value="rango">Rango</option>
+                        <option value="fecha">Fecha</option>
+                        <option value="turno">Turno</option>
+                        <option value="ph">pH cil</option>
+                        <option value="cn">CN libre</option>
+                        <option value="solidos">Solidos</option>
+                        <option value="caudal">Caudal pulpa</option>
+                        <option value="oxigeno">Oxígeno disuelto</option>
+                        <option value="ley">Ley cola Au</option>
+                    </select>
+                    <label for="turnoSelect" id="turnoLabel" style="display:none;">Turno:</label>
+                    <select id="turnoSelect" class="filtrar" style="display:none;">
+                        <option value="">Todos</option>
+                        <option value="Día">Día</option>
+                        <option value="Noche">Noche</option>
+                    </select>
+                    <label for="searchInput">Buscar:</label>
+                    <input id="searchInput" type="text" placeholder="Escribe el valor a filtrar...">
+                    <label for="rangoSelect" id="rangoLabel" style="display:none;">Rango:</label>
+                    <select id="rangoSelect" class="filtrar" style="display:none;">
+                        <option value="">Todos</option>
+                        <option value="normal">Normal</option>
+                        <option value="alerta">Alerta</option>
+                        <option value="accion">Acción</option>
+                    </select>
+                    <label for="dateInput" id="dateLabel" style="display:none;">Fecha:</label>
+                    <input id="dateInput" type="date" style="display:none;">
+                    <label for="minInput" id="minLabel" style="display:none;">Mín:</label>
+                    <input id="minInput" type="number" placeholder="Mínimo" style="display:none;">
+                    <label for="maxInput" id="maxLabel" style="display:none;">Máx:</label>
+                    <input id="maxInput" type="number" placeholder="Máximo" style="display:none;">
+                </div>
+                <table class="tabla" id="dataTable">
+                    <thead></thead>
+                    <tbody></tbody>
+                </table>
+            </section>
+            <section id="graficos">
+                <h1>Graficos</h1>
+            </section>
+            <section id="criticas">
+                <h1>Variables Críticas</h1>
+            </section>
+        </main>
+        <footer> <!--pie de pagina-->
+            <p>© 2026 Print("Hola Mundo").</p>
+        </footer>
+    </body>
+</html>

@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #3e6153;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 1rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    padding: 2rem;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.filtros {
+    margin-bottom: 1rem;
+}
+
+.filtrar {
+    background-color: #3e6153;
+    color: white;
+    border-radius: 5px;
+    padding: 0.5%;
+}
+
+.filtros label, .filtros select, .filtros input {
+    margin-right: 1rem;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.tabla th, .tabla td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.tabla th {
+    background-color: #f2f2f2;
+}
+
+.normal {
+    background-color: lightgreen;
+}
+
+.alerta {
+    background-color: yellow;
+}
+
+.accion {
+    background-color: lightcoral;
+}
+
+.nota {
+    font-style: italic;
+    color: #666;
+    margin-top: 1rem;
+}
+
+.excelFileInput {
+    display: none;
+}
+
+.excelFileButton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3e6153;
+    color: white;
+    border: 2px solid #3e6153;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.excelFileButton:hover {
+    background-color: #2d4840;
+    border-color: #2d4840;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.excelFileButton:active {
+    transform: scale(0.98);
+}
+
+.filtros .excelFileButton {
+    margin-right: 1rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #3e6153;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
