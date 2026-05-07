@@ -25,15 +25,17 @@
         <main> <!--contenido principal de la pagina-->
             <h1 id="t1">Control de Variables en Planta tipo Cil</h1>
             <div class="filtros">
-                <span class="nota">Los datos se cargan automáticamente desde la base de datos al abrir la página.</span><br><br>
-                <label for="excelFile" class="excelFileButton">Seleccionar Excel</label><br>
+                <span class="nota"></span><br>
                 <input id="excelFile" class="excelFileInput" type="file" accept=".xlsx,.xls,.csv">
+                <button id="loadDbOnlyButton" class="excelFileButton" type="button">Mostrar solo datos de la base de datos</button>
+                <label for="excelFile" class="excelFileButton">Seleccionar Excel y mostrar datos</label>
+                <button id="loadDbWithExcelButton" class="excelFileButton" type="button">Mostrar datos de la base de datos con Excel</button>
             </div>
             <section id="plantilla">
                 <h1>Plantilla de Valores</h1>
                 <div class="filtros">
                     <label for="filterField">Filtrar por:</label>
-                    <select id="filterField">
+                    <select id="filterField" class="filtrar">
                         <option value="rango">Rango</option>
                         <option value="fecha">Fecha</option>
                         <option value="turno">Turno</option>
@@ -45,7 +47,7 @@
                         <option value="ley">Ley cola Au</option>
                     </select>
                     <label for="turnoSelect" id="turnoLabel" style="display:none;">Turno:</label>
-                    <select id="turnoSelect" style="display:none;">
+                    <select id="turnoSelect" class="filtrar" style="display:none;">
                         <option value="">Todos</option>
                         <option value="Día">Día</option>
                         <option value="Noche">Noche</option>
@@ -53,7 +55,7 @@
                     <label for="searchInput">Buscar:</label>
                     <input id="searchInput" type="text" placeholder="Escribe el valor a filtrar...">
                     <label for="rangoSelect" id="rangoLabel" style="display:none;">Rango:</label>
-                    <select id="rangoSelect" style="display:none;">
+                    <select id="rangoSelect" class="filtrar" style="display:none;">
                         <option value="">Todos</option>
                         <option value="normal">Normal</option>
                         <option value="alerta">Alerta</option>
