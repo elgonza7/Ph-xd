@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const tbody = table.tBodies[0] || table.createTBody();
     let rows = [];
     let headers = [];
+    let currentExcelHeaders = null;
+    let currentExcelRows = [];
+    let currentDbHeaders = null;
+    let currentDbRows = [];
 
     const headerAliases = {
         fecha: ['fecha'],
@@ -227,7 +231,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const sheet = workbook.Sheets[sheetName];
             const { headers: loadedHeaders, rows: loadedRows } = parseSheetToData(sheet);
             if (loadedHeaders.length) {
-                buildTable(loadedHeaders, loadedRows);
+                currentExcelHeaders = loadedHeaders;
+                currentExcelRows = loadedRows;
+                buildTable(currentExcelHeaders, currentExcelRows);
             }
         };
         reader.readAsArrayBuffer(file);
@@ -240,18 +246,57 @@ document.addEventListener('DOMContentLoaded', () => {
                 throw new Error(`Error al cargar datos: ${response.status}`);
             }
             const jsonData = await response.json();
-            if (!Array.isArray(jsonData) || jsonData.length === 0) return;
+            if (!Array.isArray(jsonData) || jsonData.length === 0) return { headers: [], rows: [] };
 
             const dbHeaders = Object.keys(jsonData[0]);
             const dbRows = jsonData.map(item => dbHeaders.map(header => (item[header] !== undefined ? item[header] : '')));
-            buildTable(dbHeaders, dbRows);
+            return { headers: dbHeaders, rows: dbRows };
         } catch (error) {
             console.error(error);
             alert('No se pudo cargar datos desde la base de datos. Verifica el servidor.');
+            return { headers: [], rows: [] };
+        }
+    }
+
+    function mergeDataSources(headersA, rowsA, headersB, rowsB) {
+        const mergedHeaders = [...new Set([...(headersA || []), ...(headersB || [])])];
+        const toRow = (headersSource, rowValues) => mergedHeaders.map(header => {
+            const index = (headersSource || []).findIndex(h => normalize(h) === normalize(header));
+            return index >= 0 ? rowValues[index] : '';
+        });
+        const mergedRows = [];
+        if (rowsA.length) mergedRows.push(...rowsA.map(row => toRow(headersA, row)));
+        if (rowsB.length) mergedRows.push(...rowsB.map(row => toRow(headersB, row)));
+        return { headers: mergedHeaders, rows: mergedRows };
+    }
+
+    async function loadFromDatabaseWithExcel() {
+        const dbData = await loadFromDatabase();
+        if (!currentExcelHeaders || currentExcelRows.length === 0) {
+            alert('Selecciona primero un archivo Excel para combinarlo con la base de datos.');
+            return;
+        }
+        currentDbHeaders = dbData.headers;
+        currentDbRows = dbData.rows;
+        const merged = mergeDataSources(currentExcelHeaders, currentExcelRows, currentDbHeaders, currentDbRows);
+        buildTable(merged.headers, merged.rows);
+    }
+
+    async function loadFromDatabaseOnly() {
+        excelFile.value = '';
+        currentExcelHeaders = null;
+        currentExcelRows = [];
+        const dbData = await loadFromDatabase();
+        currentDbHeaders = dbData.headers;
+        currentDbRows = dbData.rows;
+        if (currentDbHeaders.length) {
+            buildTable(currentDbHeaders, currentDbRows);
         }
     }
 
     excelFile.addEventListener('change', handleFile);
+    document.getElementById('loadDbWithExcelButton').addEventListener('click', loadFromDatabaseWithExcel);
+    document.getElementById('loadDbOnlyButton').addEventListener('click', loadFromDatabaseOnly);
     filterField.addEventListener('change', () => {
         updateFilterInputVisibility();
         filterTable();
@@ -263,5 +308,4 @@ document.addEventListener('DOMContentLoaded', () => {
     maxInput.addEventListener('input', filterTable);
     searchInput.addEventListener('input', filterTable);
     updateFilterInputVisibility();
-    loadFromDatabase();
 });
