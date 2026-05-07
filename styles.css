@@ -39,6 +39,13 @@ h1, h2 {
     margin-bottom: 1rem;
 }
 
+.filtrar {
+    background-color: #3e6153;
+    color: white;
+    border-radius: 5px;
+    padding: 0.5%;
+}
+
 .filtros label, .filtros select, .filtros input {
     margin-right: 1rem;
 }
